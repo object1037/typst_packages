@@ -7,6 +7,16 @@
   set page(
     paper: "presentation-" + aspect-ratio,
   )
+  set text(
+    size: 24pt,
+    font: ("Helvetica Neue", "Hiragino Kaku Gothic ProN", "Noto Sans", "Noto Sans CJK JP"),
+    weight: 400,
+    hyphenate: true,
+    lang: "ja"
+  )
+  show footnote.entry: set text(size: 15pt)
+  set footnote.entry(gap: 0.25em, clearance: 0pt)
+  set list(marker: (bullet-text(sym.square.filled), bullet-text(sym.diamond.filled), bullet-text(sym.bullet)))
   
   body
 }
@@ -99,4 +109,20 @@
   )
 
   polylux-slide(content)
+}
+
+#let bullet-text(size: 14pt, body) = [#text(size, fill: gray, baseline: 4pt, body)]
+#let bigarrow(dir: "r") = {
+  set align(center + horizon)
+  set text(40pt)
+
+  if dir == "r" {
+    sym.arrow.r.filled
+  } else if dir == "l" {
+    sym.arrow.l.filled
+  } else if dir == "t" {
+    sym.arrow.t.filled
+  } else if dir == "b" {
+    sym.arrow.b.filled
+  }
 }
