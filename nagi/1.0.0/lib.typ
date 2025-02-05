@@ -1,5 +1,21 @@
 #import "@preview/polylux:0.3.1": *
 
+#let bullet-text(size: 14pt, body) = [#text(size, fill: gray, baseline: 4pt, body)]
+#let bigarrow(dir: "r") = {
+  set align(center + horizon)
+  set text(40pt)
+
+  if dir == "r" {
+    sym.arrow.r.filled
+  } else if dir == "l" {
+    sym.arrow.l.filled
+  } else if dir == "t" {
+    sym.arrow.t.filled
+  } else if dir == "b" {
+    sym.arrow.b.filled
+  }
+}
+
 #let nagi-theme(
   aspect-ratio: "16-9",
   body
@@ -109,20 +125,4 @@
   )
 
   polylux-slide(content)
-}
-
-#let bullet-text(size: 14pt, body) = [#text(size, fill: gray, baseline: 4pt, body)]
-#let bigarrow(dir: "r") = {
-  set align(center + horizon)
-  set text(40pt)
-
-  if dir == "r" {
-    sym.arrow.r.filled
-  } else if dir == "l" {
-    sym.arrow.l.filled
-  } else if dir == "t" {
-    sym.arrow.t.filled
-  } else if dir == "b" {
-    sym.arrow.b.filled
-  }
 }
