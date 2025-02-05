@@ -1,0 +1,7 @@
+[package]
+name = "nagi"
+version = "1.0.0"
+authors = ["object1037"]
+entrypoint = "lib.typ"
+license = "MIT"
+description = "Simple polylux theme"
