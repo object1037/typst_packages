@@ -1,9 +1,10 @@
-#import "@preview/polylux:0.3.1": *
+#import "@preview/polylux:0.4.0": toolbox, slide as polylux-slide
 
+#let gray = rgb("262626")
 #let bullet-text(size: 14pt, body) = [#text(size, fill: gray, baseline: 4pt, body)]
 #let bigarrow(dir: "r") = {
   set align(center + horizon)
-  set text(40pt)
+  set text(30pt)
 
   if dir == "r" {
     sym.arrow.r.filled
@@ -15,16 +16,22 @@
     sym.arrow.b.filled
   }
 }
+#let footcite(body) = [
+  #h(.2em) // space
+  #set footnote(numbering: n => text(15pt, baseline: -2pt)[[#n]])
+  #footnote[#h(.2em) #body]
+]
 
-#let nagi-theme(
+#let setup(
   aspect-ratio: "16-9",
   body
 ) = {
   set page(
     paper: "presentation-" + aspect-ratio,
+    fill: rgb("f5f5f5"),
   )
   set text(
-    size: 24pt,
+    size: 20pt,
     font: ("Helvetica Neue", "Hiragino Kaku Gothic ProN", "Noto Sans", "Noto Sans CJK JP"),
     weight: 400,
     hyphenate: true,
@@ -33,17 +40,19 @@
   show footnote.entry: set text(size: 15pt)
   set footnote.entry(gap: 0.25em, clearance: 0pt)
   set list(marker: (bullet-text(sym.square.filled), bullet-text(sym.diamond.filled), bullet-text(sym.bullet)))
-  
+  let list-counter = counter("list")
+  show list: it => {
+    list-counter.step()
+    context {
+      set text(.9em) if list-counter.get().first() == 2
+      it
+    }
+    list-counter.update(i => i - 1)
+  }
+  show heading.where(level: 1): _ => none
+
   body
 }
-
-#let gray = rgb("262626")
-
-#let footcite(body) = [
-  #h(.2em) // space
-  #set footnote(numbering: n => text(15pt, baseline: -2pt)[[#n]])
-  #footnote[#h(.2em) #body]
-]
 
 #let title-slide(
   title: [],
@@ -63,7 +72,7 @@
         inset: 8pt,
         radius: .25em,
       )
-      text(size: .75em, font: "JetBrainsMono NF", label)
+      text(size: .75em, font: ("JetBrainsMono NF", "Cica"), label)
     }
     text(size: 36pt, weight: 700, title)
     if subtitle != none {
@@ -84,42 +93,39 @@
   polylux-slide(content)
 }
 
+#let slide-title-header = toolbox.next-heading(h => {
+  set align(top)
+  v(0.25cm)
+  if h != none {
+    show: block.with(
+      width: 100%,
+      height: 2.5cm,
+      inset: 0.5cm,
+      stroke: (bottom: (paint: gray, thickness: 1pt)),
+    )
+    set align(horizon)
+    set text(32pt, weight: 600)
+    h
+  } else { none }
+})
+
 #let slide(title: none, body) = {
-  let last-number = utils.last-slide-number
-  let header = {
-    set align(top)
-    v(0.5cm)
-    if title != none {
-      show: block.with(
-        width: 100%,
-        height: 2.5cm,
-        inset: 0.5cm,
-        stroke: (bottom: (paint: gray, thickness: 1pt)),
-      )
-      set align(horizon)
-      set text(36pt, weight: 600)
-      title
-    } else { [] }
-  }
-
-  let footer = {
-    set text(size: 1em)
-    show: pad.with(bottom: 1em)
-    set align(bottom)
-    h(1fr)
-    text(22pt)[
-      #logic.logical-slide.display() / #last-number
-    ] 
-  }
-
   let content = {
     show: pad.with(.75em)
     set text(24pt, weight: 400)
     body
   }
 
+  let footer = {
+    set align(right)
+    set text(18pt)
+    show: pad.with(top: -1.5cm)
+    line(length: 100%, stroke: 1pt + red)
+    [#toolbox.slide-number #text(size: .8em, [\/ #toolbox.last-slide-number])]
+  }
+
   set page(
-    header: header,
+    header: slide-title-header,
     margin: (top: 4cm, bottom: 0.5cm, left: 1cm, right: 1cm),
     footer: footer,
   )
