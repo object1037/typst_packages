@@ -1,6 +1,7 @@
 #import "@preview/polylux:0.4.0": toolbox, slide as polylux-slide
 
 #let gray = rgb("262626")
+#let bg = rgb("f5f5f5")
 #let bullet-text(size: 14pt, body) = [#text(size, fill: gray, baseline: 4pt, body)]
 #let bigarrow(dir: "r") = {
   set align(center + horizon)
@@ -28,7 +29,7 @@
 ) = {
   set page(
     paper: "presentation-" + aspect-ratio,
-    fill: rgb("f5f5f5"),
+    fill: bg,
   )
   set text(
     size: 20pt,
@@ -38,7 +39,7 @@
     lang: "ja"
   )
   show footnote.entry: set text(size: 15pt)
-  set footnote.entry(gap: 0.25em, clearance: 0pt)
+  set footnote.entry(gap: 0.4em, clearance: 0pt)
   set list(marker: (bullet-text(sym.square.filled), bullet-text(sym.diamond.filled), bullet-text(sym.bullet)))
   let list-counter = counter("list")
   show list: it => {
@@ -112,7 +113,7 @@
 #let slide(title: none, body) = {
   let content = {
     show: pad.with(.75em)
-    set text(24pt, weight: 400)
+    set text(22pt, weight: 400)
     body
   }
 
@@ -120,7 +121,7 @@
     set align(right)
     set text(18pt)
     show: pad.with(top: -1.5cm)
-    line(length: 100%, stroke: 1pt + red)
+    line(length: 100%, stroke: 0pt + bg.darken(50%))
     [#toolbox.slide-number #text(size: .8em, [\/ #toolbox.last-slide-number])]
   }
 
