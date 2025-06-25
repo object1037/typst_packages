@@ -1,8 +1,7 @@
 #import "@preview/polylux:0.4.0": toolbox, slide as polylux-slide
 
-#let gray = rgb("262626")
-#let bg = rgb("f5f5f5")
-#let bullet-text(size: 14pt, body) = [#text(size, fill: gray, baseline: 4pt, body)]
+#let fg = rgb("262626")
+#let bullet-text(size: 14pt, body) = [#text(size, fill: fg, baseline: 4pt, body)]
 #let bigarrow(dir: "r") = {
   set align(center + horizon)
   set text(30pt)
@@ -25,6 +24,8 @@
 
 #let setup(
   aspect-ratio: "16-9",
+  bg: rgb("f5f5f5"),
+  fg: rgb("262626"),
   body
 ) = {
   set page(
@@ -80,7 +81,7 @@
       linebreak()
       text(size: 0.9em, subtitle)
     }
-    line(length: 100%, stroke: 1pt + gray)
+    line(length: 100%, stroke: 1pt + fg)
     set text(size: .8em)
     if affiliation != none {
       block(spacing: 1em, affiliation)
@@ -102,7 +103,7 @@
       width: 100%,
       height: 2.5cm,
       inset: 0.5cm,
-      stroke: (bottom: (paint: gray, thickness: 1pt)),
+      stroke: (bottom: (paint: fg, thickness: 1pt)),
     )
     set align(horizon)
     set text(32pt, weight: 600)
@@ -121,7 +122,7 @@
     set align(right)
     set text(18pt)
     show: pad.with(top: -1.5cm)
-    line(length: 100%, stroke: 0pt + bg.darken(50%))
+    line(length: 100%, stroke: 0pt + fg.lighten(50%))
     [#toolbox.slide-number #text(size: .8em, [\/ #toolbox.last-slide-number])]
   }
 
