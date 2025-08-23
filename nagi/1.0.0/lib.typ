@@ -1,6 +1,6 @@
-#import "@preview/polylux:0.4.0": toolbox, slide as polylux-slide
+#import "@preview/polylux:0.4.0": slide as polylux-slide, toolbox
 
-#let fg = rgb("262626")
+#let fg = rgb("171717")
 #let bullet-text(size: 14pt, body) = [#text(size, fill: fg, baseline: 4pt, body)]
 #let bigarrow(dir: "r") = {
   set align(center + horizon)
@@ -24,9 +24,9 @@
 
 #let setup(
   aspect-ratio: "16-9",
-  bg: rgb("f5f5f5"),
-  fg: rgb("262626"),
-  body
+  bg: rgb("fafafa"),
+  fg: rgb("171717"),
+  body,
 ) = {
   set page(
     paper: "presentation-" + aspect-ratio,
@@ -37,7 +37,7 @@
     font: ("Helvetica Neue", "Hiragino Kaku Gothic ProN", "Noto Sans", "Noto Sans CJK JP"),
     weight: 400,
     hyphenate: true,
-    lang: "ja"
+    lang: "ja",
   )
   show footnote.entry: set text(size: 15pt)
   set footnote.entry(gap: 0.4em, clearance: 0pt)
@@ -62,7 +62,7 @@
   label: none,
   affiliation: none,
   author: none,
-)= {
+) = {
   show: align.with(horizon)
   show: block.with(
     width: 100%,
@@ -91,7 +91,7 @@
       block(spacing: 1em, author)
     }
   }
-  
+
   polylux-slide(content)
 }
 
