@@ -111,6 +111,14 @@
   } else { none }
 })
 
+#let get_last_slide_number = () => {
+  let last-slide-number = counter("logical-slide").final().at(0)
+  if query(<appendix>).len() > 0 {
+    last-slide-number = counter("logical-slide").at(<appendix>).at(0)
+  }
+  last-slide-number
+}
+
 #let slide(title: none, body) = {
   let content = {
     show: pad.with(.75em)
@@ -118,12 +126,17 @@
     body
   }
 
-  let footer = {
-    set align(right)
-    set text(18pt)
-    show: pad.with(top: -1.5cm)
-    line(length: 100%, stroke: 0pt + fg.lighten(50%))
-    [#toolbox.slide-number #text(size: .8em, [\/ #toolbox.last-slide-number])]
+  let footer = context {
+    let last-slide-number = get_last_slide_number()
+    if counter("logical-slide").get().at(0) > last-slide-number {
+      none
+    } else {
+      set align(right)
+      set text(18pt)
+      show: pad.with(top: -1.5cm)
+      line(length: 100%, stroke: 0pt + fg.lighten(50%))
+      [#toolbox.slide-number #text(size: .8em, [\/ #last-slide-number])]
+    }
   }
 
   set page(
@@ -131,6 +144,7 @@
     margin: (top: 4cm, bottom: 0.5cm, left: 1cm, right: 1cm),
     footer: footer,
   )
+
 
   polylux-slide(content)
 }
