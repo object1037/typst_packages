@@ -26,18 +26,20 @@
   aspect-ratio: "16-9",
   bg: rgb("fafafa"),
   fg: rgb("171717"),
+  lang: "ja",
   body,
 ) = {
   set page(
     paper: "presentation-" + aspect-ratio,
     fill: bg,
+    margin: (x: auto, y: 0em),
   )
   set text(
     size: 20pt,
     font: ("Helvetica Neue", "Hiragino Kaku Gothic ProN", "Noto Sans", "Noto Sans CJK JP"),
     weight: 400,
     hyphenate: true,
-    lang: "ja",
+    lang: lang,
   )
   show footnote.entry: set text(size: 15pt)
   set footnote.entry(gap: 0.4em, clearance: 0pt)
@@ -62,12 +64,16 @@
   label: none,
   affiliation: none,
   author: none,
+  logos: none,
 ) = {
   show: align.with(horizon)
   show: block.with(
     width: 100%,
   )
   let content = {
+    if (logos != none) {
+      v(5em)
+    }
     if label != none {
       show: block.with(
         stroke: 1pt,
@@ -82,13 +88,16 @@
       text(size: 0.9em, subtitle)
     }
     line(length: 100%, stroke: 1pt + fg)
-    set text(size: .8em)
     if affiliation != none {
+      set text(size: .8em)
       block(spacing: 1em, affiliation)
     }
-    set text(size: 1.2em)
     if author != none {
       block(spacing: 1em, author)
+    }
+    if (logos != none) {
+      v(1em)
+      block(height: 3em, stack(dir: ltr, spacing: .5em, ..logos.map(im => [#im])))
     }
   }
 
