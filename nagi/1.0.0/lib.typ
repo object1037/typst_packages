@@ -21,6 +21,10 @@
   #set footnote(numbering: n => text(15pt, baseline: -2pt)[[#n]])
   #footnote[#h(.2em) #body]
 ]
+#let incite(body) = [
+  #h(.2em) // space
+  #text(15pt, baseline: -2pt)[[#body]]
+]
 
 #let setup(
   aspect-ratio: "16-9",
@@ -54,6 +58,7 @@
     list-counter.update(i => i - 1)
   }
   show heading.where(level: 1): _ => none
+  show figure.caption: set text(size: .75em, weight: "semibold")
 
   body
 }
